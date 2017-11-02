@@ -4,13 +4,12 @@
     </head>
     <body>
         <h1>App chat</h1>
+        <div id="feedback"></div>
         <div id="messages"></div>
         <br>
-        <form id="form">
-            <input type="text" id="username" placeholder="name">
-            <input type="text" id="text" placeholder="content">
-            <input type="submit" value="Send">
-        </form>
+        <input type="text" id="username" placeholder="name">
+        <input type="text" id="text" placeholder="content">
+        <button id="btn-send">send</button>
         <script src="/socket.io/socket.io.js"></script>
         <script src="./main.js"></script>
     </body>

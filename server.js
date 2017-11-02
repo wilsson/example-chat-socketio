@@ -1,26 +1,24 @@
-var express = require('express');
-var app = express();
-var server = require('http').createServer(app)
-var io = require('socket.io')(server);
+let express = require('express');
+let app = express();
+let server = require('http').createServer(app)
+let io = require('socket.io')(server);
 
-var messages = [{
-    author: 'wilson',
-    text: 'message of wilson'
-}]
-
+let messages = [];
 app.use(express.static('./public'));
-app.get('/', (req, res) => {
-    res.status(200).send('hola mundo a');
-})
 
 io.on('connection', (socket) => {
-    socket.emit('messages', messages);
+    console.log('socket connection', socket.id);
+    
     socket.on('new-message', (data) => {
         messages.push(data);
         io.sockets.emit('messages', messages);
+    });
+
+    socket.on('typing', (data) => {
+        socket.broadcast.emit('typing', data);
     });
 });
 
 server.listen(8080, () => {
     console.log('listen in localhost:8080');
-})
+});
